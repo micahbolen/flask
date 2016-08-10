@@ -372,7 +372,7 @@ def flash(message, category='message'):
                          message=message, category=category)
 
 
-def get_flashed_messages(with_categories=False, category_filter=[]):
+def get_flashed_messages(with_categories=False, category_filter=None):
     """Pulls all flashed messages from the session and returns them.
     Further calls in the same request to the function will return
     the same messages.  By default just the messages are returned,
@@ -400,6 +400,8 @@ def get_flashed_messages(with_categories=False, category_filter=[]):
     :param with_categories: set to ``True`` to also receive categories.
     :param category_filter: whitelist of categories to limit return values
     """
+    if category_filter is None:
+        category_filter = []
     flashes = _request_ctx_stack.top.flashes
     if flashes is None:
         _request_ctx_stack.top.flashes = flashes = session.pop('_flashes') \
